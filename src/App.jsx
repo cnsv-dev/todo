@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 function App() {
 
-  // let lista = ["mancare", "somn", "1", "citit"];
   const [todo, setTodo] = useState("");
   const [lista, setLista] = useState([]);
 
@@ -13,8 +12,24 @@ function App() {
     setTodo("");
   }
 
-  function sterge(){
+  // functie pentru 
+  function reset(){
     setLista([]);
+  }
+
+  function removeItem(item){
+    // facem o lista noua, bazata pe lista originala
+    let listaNoua = lista.filter((el) => {
+      // Daca elementul curent este diferit de item
+      //(ce vrem sa eliminam), il pastram
+      if(el!==item){
+        return true; // Daca returnam true, pastreaza elementul
+      }
+      else return false; // Daca returnam false, elimina elementul
+    })
+
+    // Actualizam state-ul lista
+    setLista(listaNoua);
   }
 
 
@@ -25,19 +40,24 @@ function App() {
         onChange={(e) => setTodo(e.target.value)}
         placeholder='Ce vrei sa faci?'
       />
+      <br/>
       <button onClick={adauga}>Adauga</button>
-      <button onClick={sterge}>Sterge</button>
+      <br/>
+      <button onClick={reset}>Reset</button>
 
 
-      <ol>
+      <ul>
         {
           lista.map((el) => {
             return (
-              <li>{el}</li>
+              <li>
+                {el}
+                <button onClick={() => removeItem(el)}>Sterge</button>
+              </li>
             )
           })
         }
-      </ol>
+      </ul>
 
     </div>
   );
