@@ -31,6 +31,7 @@ function App() {
     // Actualizam state-ul lista
     setLista(listaNoua);
   }
+  //
 
 
   return (
