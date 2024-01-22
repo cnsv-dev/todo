@@ -3,63 +3,44 @@ import { useState } from 'react';
 
 
 function App() {
+const [text, setText]= useState("")
+const [lista, setLista] = useState([])
 
-  const [todo, setTodo] = useState("");
-  const [lista, setLista] = useState([]);
+function Add() {
+  setLista([...lista, text])
+}
 
-  function adauga(){
-    setLista([...lista, todo]);
-    setTodo("");
-  }
-
-  // functie pentru 
-  function reset(){
-    setLista([]);
-  }
-
-  function removeItem(item){
-    // facem o lista noua, bazata pe lista originala
-    let listaNoua = lista.filter((el) => {
-      // Daca elementul curent este diferit de item
-      //(ce vrem sa eliminam), il pastram
-      if(el!==item){
-        return true; // Daca returnam true, pastreaza elementul
-      }
-      else return false; // Daca returnam false, elimina elementul
-    })
-
-    // Actualizam state-ul lista
-    setLista(listaNoua);
-  }
-  //
-
+function sterge(elem){
+  const noualista=lista.filter((el)=> {
+    if(el==elem){
+      return 0;
+    }
+    else{
+      return 1;
+    }
+  })
+  setLista(noualista)
+}
 
   return (
     <div>
-      <input 
-        value={todo}
-        onChange={(e) => setTodo(e.target.value)}
-        placeholder='Ce vrei sa faci?'
-      />
-      <br/>
-      <button onClick={adauga}>Adauga</button>
-      <br/>
-      <button onClick={reset}>Reset</button>
-
-
-      <ul>
-        {
-          lista.map((el) => {
-            return (
-              <li>
-                {el}
-                <button onClick={() => removeItem(el)}>Sterge</button>
-              </li>
-            )
-          })
-        }
-      </ul>
-
+        <input 
+          placeholder='Scrie cv...' 
+          value={text}
+          onChange={(e)=>setText(e.target.value)}></input>
+        <button onClick={Add}>ADD</button>
+        <h1>{text}</h1>
+        <ul>
+          {
+            lista.map((el) => {
+              return (
+                <li>
+                  <button onClick={()=>sterge(el)}>-</button>
+                  {el}</li>
+              )
+            })
+          }
+        </ul>
     </div>
   );
 }
